@@ -176,6 +176,11 @@ int evenBits(void) {
   int z = 1431655765;
   return z;
 }
+
+
+
+
+
 /* 
  * logicalShift - shift x to the right by n, using a logical shift
  *   Can assume that 0 <= n <= 31
@@ -207,7 +212,9 @@ int bang(int x) {
  *   Rating: 2 
  */
 int leastBitPos(int x) {
-  return 2;
+  int y = ~x + 1;
+  int z = x & y;
+  return z;
 }
 /* 
  * isNotEqual - return 0 if x == y, and 1 otherwise 
