@@ -139,7 +139,7 @@ NOTES:
  *   Rating: 1
  */
 int bitAnd(int x, int y) {
-  int z = ~( ~x | ~y); //logic here
+  int z = ~( ~x | ~y); //returns the inverse of inverse x or inverse y
   return z;
 }
 
@@ -151,7 +151,7 @@ int bitAnd(int x, int y) {
  *   Rating: 1
  */
 int bitNor(int x, int y) {
-  int z = ~x & ~y;
+  int z = ~x & ~y; //returns inverse x and inverse y, anded.
   return z;
 
 }
@@ -163,7 +163,7 @@ int bitNor(int x, int y) {
  *   Rating: 2
  */
 int copyLSB(int x) {
-  int z = ((x << 31) >> 31);
+  int z = ((x << 31) >> 31); //returns x shifted left by 31 bits, which is then shifted right by 31 bits.
   return z;
 }
 /* 
@@ -173,13 +173,11 @@ int copyLSB(int x) {
  *   Rating: 1
  */
 int evenBits(void) {
-  int z = 1431655765;
+  int x = 0x55; //creates an integer that equates to 01010101
+  int y = x | x << 8; //shifts y left by 8 bits and copies them over into a new 8 bits
+  int z = y | y << 16; //shifts y left by 16 bits and copies them over into a new 16 bits
   return z;
 }
-
-
-
-
 
 /* 
  * logicalShift - shift x to the right by n, using a logical shift
@@ -190,7 +188,7 @@ int evenBits(void) {
  *   Rating: 3 
  */
 int logicalShift(int x, int n) {
-  int z = x >> n;
+  int z = ((((1 << (31 - n)) - 1) << 1) | 1) & (x >> n);
   return z;
 }
 /* 
@@ -201,7 +199,9 @@ int logicalShift(int x, int n) {
  *   Rating: 4 
  */
 int bang(int x) {
-  return 2;
+  int y = ~x + 1; //creates int with value of inverse x, plus 1
+  int z = (((x >> 31) & 1) | ((y >> 31) & 1)) ^ 1;
+  return z;
 }
 /* 
  * leastBitPos - return a mask that marks the position of the
@@ -212,10 +212,11 @@ int bang(int x) {
  *   Rating: 2 
  */
 int leastBitPos(int x) {
-  int y = ~x + 1;
-  int z = x & y;
+  int y = ~x + 1; //returns the 2's complement of x, plus 1
+  int z = x & y; //ands x and y
   return z;
 }
+
 /* 
  * isNotEqual - return 0 if x == y, and 1 otherwise 
  *   Examples: isNotEqual(5,5) = 0, isNotEqual(4,5) = 1
@@ -224,7 +225,8 @@ int leastBitPos(int x) {
  *   Rating: 2
  */
 int isNotEqual(int x, int y) {
-  return 2;
+  int z = !!(x ^ y); //gives the boolean result (not not = true) of a comparison between x and y
+  return z;
 }
 /* 
  * negate - return -x 
@@ -234,7 +236,8 @@ int isNotEqual(int x, int y) {
  *   Rating: 2
  */
 int negate(int x) {
-  return 2;
+  int z = ~x + 1; //returns the 2's complement of x, plus one.
+  return z;
 }
 /* 
  * isPositive - return 1 if x > 0, return 0 otherwise 
@@ -244,7 +247,8 @@ int negate(int x) {
  *   Rating: 3
  */
 int isPositive(int x) {
-  return 2;
+  int z = ((x & 1) >> 31 | !x);
+  return z;
 }
 /* 
  * isNonNegative - return 1 if x >= 0, return 0 otherwise 
@@ -287,7 +291,9 @@ int addOK(int x, int y) {
  *   Rating: 4
  */
 int absVal(int x) {
-  return 2;
+  int y = x >> 31;
+  int z = (x ^ y) + (1 + ~y);
+  return z;
 }
 /* 
  * isNonZero - Check whether x is nonzero using
